@@ -1,9 +1,6 @@
 package rocks.zipcode;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -18,9 +15,9 @@ public class FileMap implements Serializable, Map<String,NoteList> {
      */
     private static final long serialVersionUID = 1L;
 
-    static final String DBNAME = "ntz.db";
+    static final String DBNAME = "/Users/nathan/Projects/ntz-java/ntz/src/main/java/rocks/zipcode/ntz.db";
 
-    private Map<String, NoteList> hashmap = new HashMap<String, NoteList>();
+    private Map<String, NoteList> hashmap = new LinkedHashMap<String, NoteList>();
 
     public FileMap() {
         super();
@@ -68,10 +65,13 @@ public class FileMap implements Serializable, Map<String,NoteList> {
         Set<String> ks = this.keySet();
         for (String k : ks) {
             NoteList nl = this.get(k);
-            s.append(k);
+            s.append("  " + k.toUpperCase());
             s.append("\n");
-            s.append(nl.toString());
-            s.append("\n");
+            for(int i = 0; i < nl.size(); i++) {
+                s.append(i+1 + ") ");
+                s.append(nl.get(i));
+                s.append("\n");
+            }
         }
         return s.toString();
     }
@@ -128,6 +128,4 @@ public class FileMap implements Serializable, Map<String,NoteList> {
     public Set entrySet() {
         return hashmap.entrySet();
     }
-
- 
 }
